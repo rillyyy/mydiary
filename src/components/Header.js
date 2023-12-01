@@ -4,8 +4,12 @@ import { TopBar } from "../styles/headerstyle";
 const Header = props => {
   return (
     <TopBar>
-      <button onClick={() => {}}>
-        <img src="/images/bt_list.svg" alt="" />
+      <button
+        onClick={() => {
+          props.handleClickMenu();
+        }}
+      >
+        <img src={`/images/${props.icon}`} alt="" />
       </button>
       <h2>{props.children}</h2>
       <button onClick={() => {}}>

@@ -2,11 +2,18 @@ import React from "react";
 import Header from "../../components/Header";
 import Main from "../../components/Main";
 import Footer from "../../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const DiaryAdd = () => {
+  const navigate = useNavigate();
+  const handleClickMenu = () => {
+    navigate(-1);
+  };
   return (
     <>
-      <Header>My Diary - Add</Header>
+      <Header handleClickMenu={handleClickMenu} icon="bt_back.svg">
+        My Diary - Add
+      </Header>
       <Main>
         <h2 style={{ textAlign: "center", color: "red" }}>다이어리 추가</h2>
       </Main>
