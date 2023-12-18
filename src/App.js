@@ -37,16 +37,13 @@ function App() {
           <Route path="/home" element={<Index />}></Route>
           <Route
             path="/diary"
-            element={<DiaryIndex list={list} setList={setList} />}
-          ></Route>
+            element={<DiaryIndex list={list} setList={setList} />}></Route>
           <Route
             path="/diary/add"
-            element={<DiaryAdd list={list} setList={setList} />}
-          ></Route>
+            element={<DiaryAdd list={list} setList={setList} />}></Route>
           <Route
             path="/diary/edit/:pk"
-            element={<DiaryEdit list={list} />}
-          ></Route>
+            element={<DiaryEdit list={list} />}></Route>
         </Routes>
       </div>
     </div>
@@ -54,3 +51,5 @@ function App() {
 }
 
 export default App;
+
+

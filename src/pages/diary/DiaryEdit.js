@@ -5,15 +5,14 @@ import Footer from "../../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { postData } from "../../api/api_diary/diary";
 
-const DiaryEdit = props => {
-  const param = useParams();
+const DiaryEdit = ({ list, setList }) => {
+  // const param = useParams();
+  // const pk = param.pk;
+  const { pk } = useParams();
   const navigate = useNavigate();
   const handleClickMenu = () => {
     navigate(-1);
   };
-
-  const list = props.list;
-  const setList = props.setList;
 
   const [open, setOpen] = useState(true);
   const [year, setYear] = useState("");
@@ -30,22 +29,42 @@ const DiaryEdit = props => {
   const [pic2, setPic2] = useState("");
   // 화면에 초기값 셋팅 ( [] 배열은 처음 만 실행하라)
   useEffect(() => {
-    const data = list[param.pk];
+    const data = list[pk];
+    // console.log("pk", pk);
+    // console.log("list", list);
+    // console.log("list", list[pk]);
+    // console.log(data);
+
+    const {
+      open,
+      year,
+      month,
+      date,
+      day,
+      detail,
+      memo,
+      mood,
+      title,
+      weather,
+      category,
+    } = data;
+    const { content, pics } = detail;
     console.log(data);
-    setOpen();
-    setYear();
-    setMonth();
-    setDate();
-    setDay();
-    setTitle();
-    setMemo();
-    setCategory();
-    setWeather();
-    setMood();
-    setContent();
-    setPic1();
-    setPic2();
-  }, []);
+
+    setOpen(open);
+    setYear(year);
+    setMonth(month);
+    setDate(date);
+    setDay(day);
+    setTitle(title);
+    setMemo(memo);
+    setCategory(category);
+    setWeather(weather);
+    setMood(mood);
+    setContent(content);
+    setPic1(pics[0]);
+    setPic2(pics[1]);
+  }, [weather]);
 
   const handleSubmitDiaryForm = e => {
     // 1. 실행시 자동으로 웹브라우저 새로고침 됨
@@ -53,29 +72,30 @@ const DiaryEdit = props => {
     e.preventDefault();
     // 2. 추가해 줄 자료를 만든다.
     const item = {
-      open: open,
-      year: year,
-      month: month,
-      date: date,
-      day: day,
-      title: title,
-      memo: memo,
-      category: category,
-      weather: weather,
-      mood: mood,
+      open,
+      year,
+      month,
+      date,
+      day,
+      title,
+      memo,
+      category,
+      weather,
+      mood,
       detail: {
-        content: content,
+        content,
         pics: [pic1, pic2],
       },
     };
-    // 3. list 원본을 복사하고 새로운 내용을 추가한다.
-    const arr = [...list, item];
+    // 3. list 원본을 복사하고 내용을 수정한다.
+    const arr = [...list];
+    arr[pk] = item;
     // 4. state 업데이트
     setList(arr);
     // 5. LS 저장합니다.
     postData(arr);
     // 6. 안내창
-    alert("항목이 추가되었습니다.");
+    alert("항목이 수정되었습니다.");
     // 7. 이전화면
     navigate(-1);
   };
@@ -125,7 +145,6 @@ const DiaryEdit = props => {
       setPic2(value);
     }
   };
-  
   return (
     <>
       <Header handleClickMenu={handleClickMenu} icon="bt_back.svg">
@@ -206,7 +225,8 @@ const DiaryEdit = props => {
                       type="radio"
                       value={1}
                       name="weather"
-                      defaultChecked={true}
+                      checked={weather === 1}
+                      // defaultChecked={weather === 1 ? true : false}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -216,6 +236,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={2}
                       name="weather"
+                      checked={weather === 2}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -225,6 +246,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={3}
                       name="weather"
+                      checked={weather === 3}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -234,6 +256,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={4}
                       name="weather"
+                      checked={weather === 4}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -243,6 +266,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={5}
                       name="weather"
+                      checked={weather === 5}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -252,6 +276,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={6}
                       name="weather"
+                      checked={weather === 6}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -261,6 +286,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={7}
                       name="weather"
+                      checked={weather === 7}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -276,6 +302,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={1}
                       name="mood"
+                      checked={mood === 1}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -285,6 +312,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={2}
                       name="mood"
+                      checked={mood === 2}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -294,6 +322,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={3}
                       name="mood"
+                      checked={mood === 3}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -303,6 +332,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={4}
                       name="mood"
+                      checked={mood === 4}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -312,6 +342,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={5}
                       name="mood"
+                      checked={mood === 5}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -321,7 +352,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={6}
                       name="mood"
-                      defaultChecked={true}
+                      checked={mood === 6}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -330,6 +361,7 @@ const DiaryEdit = props => {
                     <input
                       type="radio"
                       value={7}
+                      checked={mood === 7}
                       name="mood"
                       onChange={e => {
                         handleChangeDiaryInput(e);
@@ -339,6 +371,7 @@ const DiaryEdit = props => {
                     <input
                       type="radio"
                       value={8}
+                      checked={mood === 8}
                       name="mood"
                       onChange={e => {
                         handleChangeDiaryInput(e);
@@ -354,7 +387,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={0}
                       name="open"
-                      defaultChecked={true}
+                      checked={open === 0}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}
@@ -364,6 +397,7 @@ const DiaryEdit = props => {
                       type="radio"
                       value={1}
                       name="open"
+                      checked={open === 1}
                       onChange={e => {
                         handleChangeDiaryInput(e);
                       }}

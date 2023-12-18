@@ -29,7 +29,7 @@ const Index = () => {
           Copyright 2023
         </div>
       </Footer>
-    </>
+    </> 
   );
 };
 

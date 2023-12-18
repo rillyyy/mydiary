@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Main from "../../components/Main";
 import DiaryList from "../../components/diary/DiaryList";
-import { deleteAllData } from "../../api/api_diary/diary";
+import { deleteAllData, postData } from "../../api/api_diary/diary";
 
 const Index = props => {
   // 상위 컴포넌트에서 값을 받아온다
@@ -25,15 +25,20 @@ const Index = props => {
     // LS 지우기
     deleteAllData([]);
     // state 초기화
+    setList([]);
   };
 
   // 항목 삭제 기능
   const deleteDiary = pk => {
     alert(pk + "삭제");
     // 1. list state 를 복사한 배열을 만든다.
+    const arr = [...list];
     // 2. 복사한 배열에서 pk 번를 제거한다.
+    arr.splice(pk, 1);
     // 3. list Set 한다.
+    setList([...arr]);
     // 4. LS 저장한다.
+    postData(arr);
   };
 
   return (
@@ -42,7 +47,7 @@ const Index = props => {
         My Diary 홈
       </Header>
       <Main>
-        <h2 style={{ textAlign: "center", color: "red" }}>다이어리 첫화면</h2>
+        <h2 style={{ textAlign: "center", color: "red" }}>다이어리 첫 화면</h2>
         <div>
           <h3> 배열의 내용을 출력함 : map 메서드사용 </h3>
           {/* 목록 출력 */}
@@ -68,7 +73,7 @@ const Index = props => {
         </button>
       </Main>
       <Footer>
-        <p>Coprytight 2023. 다이어리 첫화면</p>
+        <p>Copryright 2023. 다이어리 첫 화면</p>
       </Footer>
     </>
   );
